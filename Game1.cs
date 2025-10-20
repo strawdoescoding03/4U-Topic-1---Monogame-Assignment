@@ -34,6 +34,7 @@ namespace _4U_Topic_1____Monogame_Assignment
             backgroundTexture = Content.Load<Texture2D>("Images/skyBg");
             dragonTexture = Content.Load<Texture2D>("Images/ladyDragon");
             castleTexture = Content.Load<Texture2D>("Images/castleImage");
+
             donkeyTexture = Content.Load<Texture2D>("Images/donkey");
 
 
