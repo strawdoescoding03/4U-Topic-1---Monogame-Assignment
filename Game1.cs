@@ -12,8 +12,9 @@ namespace _4U_Topic_1____Monogame_Assignment
 
         Texture2D backgroundTexture, dragonTexture, castleTexture, donkeyTexture, rectangleTexture;
 
-        Rectangle window, dragonRect, castleRect, donkeyRect, backgroundRect, rectangleRect;
+        Rectangle window, dragonRect, castleRect, donkeyRect, backgroundRect, dragonPositionRect;
 
+        Vector2 dragonPosition;
         float dragon_x, dragonXPosition;
 
         public Game1()
@@ -36,8 +37,8 @@ namespace _4U_Topic_1____Monogame_Assignment
             dragonRect = new Rectangle(100, 300, 200, 150);
             castleRect = new Rectangle(80, 60, 700, 800);
             donkeyRect = new Rectangle(300, 400, 150, 100);
-            rectangleRect = dragonRect;
-
+            dragonPositionRect = new Rectangle(dragonRect.X, dragonRect.Y, dragonRect.Width + 100, dragonRect.Height +110);
+            dragonPosition = new Vector2(dragonRect.X, dragonRect.Y);
 
 
             _graphics.ApplyChanges();
@@ -64,20 +65,30 @@ namespace _4U_Topic_1____Monogame_Assignment
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            dragon_x += 0.05f;
-            dragonXPosition += 0.4f;
 
-            rectangleRect.X = 30 + (int)(MathF.Sin(dragon_x) * 0.5f + dragonXPosition);
-            rectangleRect.Y = (int)MathF.SinCos(dragon_x).Cos * 5 + window.Height / 2;
+            //Dragon Movement Logic
 
-            if (dragonXPosition > window.Width + 100)
+            dragonXPosition += 1f;
+
+
+            dragonPosition.X += 0.1f; //10 + MathF.Sin(dragon_x) * 0.5f;
+            dragonPosition.Y = MathF.SinCos(dragonPosition.X).Cos * 5 + window.Height / 2;// 30 -  MathF.Sin(dragonPosition.X) * 5 + window.Height / 2;
+
+            dragonPositionRect.Location = dragonPosition.ToPoint();
+
+            this.Window.Title = "Dragon X Position: " + dragonPositionRect.Y;
+
+            if (dragonPositionRect.Left > window.Width)
             {
-                dragonXPosition = -200;
+                dragonPosition.X = window.X - dragonPositionRect.Width;
+                dragonPositionRect.Location = dragonPosition.ToPoint();
+
             }
 
 
 
-            //rectangleRect.X = MathF.Sin(dragon_x) * 0.5f + dragonXPosition;
+
+            //dragonPositionRect.X = MathF.Sin(dragon_x) * 0.5f + dragonXPosition;
 
 
             // TODO: Add your update logic here
@@ -93,8 +104,8 @@ namespace _4U_Topic_1____Monogame_Assignment
             
             _spriteBatch.Draw(backgroundTexture, window, Color.White);
             _spriteBatch.Draw(castleTexture, castleRect, Color.White);
-            _spriteBatch.Draw(dragonTexture,
-                new Vector2(MathF.Sin(dragon_x) * 0.5f + dragonXPosition, MathF.SinCos(dragon_x).Cos * 5 + window.Height / 2),
+            _spriteBatch.Draw(dragonTexture, 
+                dragonPosition,
                 null,
                 Color.White,
                 0,
@@ -104,7 +115,7 @@ namespace _4U_Topic_1____Monogame_Assignment
                 1
                 );
 
-            _spriteBatch.Draw(rectangleTexture, rectangleRect, Color.White*0.5f);
+            _spriteBatch.Draw(rectangleTexture, dragonPositionRect, Color.White*0.5f);
 
             _spriteBatch.Draw(donkeyTexture, donkeyRect, Color.White);
 
