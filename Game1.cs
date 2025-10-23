@@ -68,11 +68,11 @@ namespace _4U_Topic_1____Monogame_Assignment
 
             //Dragon Movement Logic
 
-            dragonXPosition += 1f;
+            dragonXPosition += 2f;
 
 
-            dragonPosition.X += 0.1f; //10 + MathF.Sin(dragon_x) * 0.5f;
-            dragonPosition.Y = MathF.SinCos(dragonPosition.X).Cos * 5 + window.Height / 2;// 30 -  MathF.Sin(dragonPosition.X) * 5 + window.Height / 2;
+            dragonPosition.X += 0.5f; //10 + MathF.Sin(dragon_x) * 0.5f;
+            dragonPosition.Y = 20 * MathF.SinCos(0.1f* dragonPosition.X).Cos * 10 + window.Height / 2;// 30 -  MathF.Sin(dragonPosition.X) * 5 + window.Height / 2;
 
             dragonPositionRect.Location = dragonPosition.ToPoint();
 
